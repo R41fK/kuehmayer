@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unistd.h>
-#include <cstdlib>
+#include <thread>
 
 
 using namespace std;
@@ -8,15 +8,17 @@ using namespace std;
 int main(){
     auto pid{fork()};
 
+    std::chrono::milliseconds sleeptime(500);
+
     if (pid == 0) {
         while (true) {
             cout << "A" << flush;
-            sleep(1);
+            std::this_thread::sleep_for(sleeptime);
         }
     } else {
         while (true) {
             cout << "B" << flush;
-            sleep(1);
+            std::this_thread::sleep_for(sleeptime);
         }
     }
 
