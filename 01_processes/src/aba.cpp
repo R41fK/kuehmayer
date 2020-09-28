@@ -20,7 +20,7 @@ void children(string out){
     
     signal(SIGTERM, signal_handler);
     if (errno) {
-        cerr << strerror(errno) << endl;
+        cerr << "starting charout failed: " << strerror(errno) << endl;
         quick_exit(1);
     }
 }
@@ -40,15 +40,21 @@ int main(){
             children("ABA_LETTER_B");
         } else {
 
+            cout << "waiting for 3 seconds" << endl;
             this_thread::sleep_for(sleeptime);
 
             int status_a{};
             int status_b{};
+            cout << endl << "killing both subprocesses with pids " << pid_a << " and " << pid_b << endl;
+
             kill(pid_a, SIGTERM);
             kill(pid_b, SIGTERM);
+
+            cout << "waiting for both subprocesses to be dead" << endl;
             waitpid(pid_a, &status_a, 0);
             waitpid(pid_b, &status_b, 0);
-            cout << endl;
+            cout << "subprocess " << pid_a << " exited with " << WEXITSTATUS(status_a) << endl;
+            cout << "subprocess " << pid_b << " exited with " << WEXITSTATUS(status_a) << endl;
         }
     }
 }
