@@ -4,6 +4,8 @@
 #include <chrono>
 #include <csignal>
 #include <sys/wait.h>
+#include <cerrno>
+#include <cstring>
 
 
 using namespace std;
@@ -12,11 +14,14 @@ void signal_handler(int){
     quick_exit(EXIT_SUCCESS);
 }
 
-void children(std::chrono::milliseconds sleeptime){
-    while (true) {
-        cout << "A" << flush;
-        std::this_thread::sleep_for(sleeptime);
-        signal(SIGTERM, signal_handler);
+void children(){
+    execl("/mnt/Storage/NVSuebungen/kuehmayer/01_processes/build/charout",
+            "charout", "r", nullptr);
+    
+    signal(SIGTERM, signal_handler);
+    if (!errno) {
+        cerr << strerror(errno) << endl;
+        quick_exit(1);
     }
 }
 
@@ -28,7 +33,7 @@ int main(){
     int cntr{};
 
     if (pid == 0) {
-        children(sleeptime);
+        children();
     } else {
         while (cntr < 6) {
             cout << "B" << flush;
@@ -40,6 +45,4 @@ int main(){
         waitpid(pid, &status, 0);
         cout << endl;
     }
-    sleep(10);
-
 }
