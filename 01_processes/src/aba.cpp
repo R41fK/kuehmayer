@@ -14,35 +14,41 @@ void signal_handler(int){
     quick_exit(EXIT_SUCCESS);
 }
 
-void children(){
+void children(string out){
     execl("/mnt/Storage/NVSuebungen/kuehmayer/01_processes/build/charout",
-            "charout", "r", nullptr);
+            "charout", out.c_str(), nullptr);
     
     signal(SIGTERM, signal_handler);
-    if (!errno) {
+    if (errno) {
         cerr << strerror(errno) << endl;
         quick_exit(1);
     }
 }
 
 int main(){
-    auto pid{fork()};
+    auto pid_a{fork()};
 
-    std::chrono::milliseconds sleeptime(500);
+    chrono::milliseconds sleeptime(3000);
 
-    int cntr{};
-
-    if (pid == 0) {
-        children();
+    if (pid_a == 0) {
+        children("A");
     } else {
-        while (cntr < 6) {
-            cout << "B" << flush;
-            std::this_thread::sleep_for(sleeptime);
-            cntr++;
+
+        auto pid_b{fork()};
+        
+        if (pid_b == 0) {
+            children("B");
+        } else {
+
+            this_thread::sleep_for(sleeptime);
+
+            int status_a{};
+            int status_b{};
+            kill(pid_a, SIGTERM);
+            kill(pid_b, SIGTERM);
+            waitpid(pid_a, &status_a, 0);
+             waitpid(pid_b, &status_b, 0);
+            cout << endl;
         }
-        int status{};
-        kill(pid, SIGTERM);
-        waitpid(pid, &status, 0);
-        cout << endl;
     }
 }
