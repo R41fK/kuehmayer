@@ -31,13 +31,13 @@ int main(){
     chrono::milliseconds sleeptime(3000);
 
     if (pid_a == 0) {
-        children("A");
+        children("ABA_LETTER_A");
     } else {
 
         auto pid_b{fork()};
         
         if (pid_b == 0) {
-            children("B");
+            children("ABA_LETTER_B");
         } else {
 
             this_thread::sleep_for(sleeptime);
@@ -47,7 +47,7 @@ int main(){
             kill(pid_a, SIGTERM);
             kill(pid_b, SIGTERM);
             waitpid(pid_a, &status_a, 0);
-             waitpid(pid_b, &status_b, 0);
+            waitpid(pid_b, &status_b, 0);
             cout << endl;
         }
     }
