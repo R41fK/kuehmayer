@@ -14,9 +14,9 @@ inc_dir = include_directories(['include',
 
 #subdir('XXX')
 
-src = ['src/race.cpp']
+src = ['src/contest.cpp', 'src/Motorcycle.cpp']
 
-executable('race',
+executable('contest',
             sources : src,
             include_directories : inc_dir,
             dependencies : thread_dep,

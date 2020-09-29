@@ -1,3 +1,5 @@
+#include "../include/Motorcycle.h"
+
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -19,7 +21,11 @@ void bimota_tesi_h2() {
 
 
 int main() {
-    thread t{bimota_tesi_h2};
+    Motorcycle ninja_h2("Kawasaki Ninja H2");
 
-    t.join();
+    thread racer_1{bimota_tesi_h2};
+    thread racer_2{ninja_h2};
+
+    racer_1.join();
+    racer_2.join();
 }
