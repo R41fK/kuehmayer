@@ -3,6 +3,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <random>
 
 
 //Bimota Tesi H2
@@ -12,11 +13,14 @@ using namespace std;
 
 
 void bimota_tesi_h2() {
+    random_device rd;
+    mt19937 gen{rd()};
+    uniform_real_distribution<> dis{1, 10};
+
     int cntr{};
     while (true) {
-        this_thread::sleep_for(chrono::milliseconds(1000));
-        cntr++;
-        string out{"Bimota Tesi H2 raced "+ to_string(cntr) + " Rounds\n"};
+        this_thread::sleep_for(chrono::milliseconds(int(dis(gen) * 1000)));
+        string out{"Bimota Tesi H2 raced "+ to_string(++cntr) + " Rounds\n"};
 
         cout << out << flush;
     }
