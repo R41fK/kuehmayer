@@ -14,6 +14,10 @@ Motorcycle::Motorcycle(string brand_and_model){
     this->brand_and_model = brand_and_model;
 }
 
+double Motorcycle::get_total_time(){
+    return this->totale_time;
+}
+
 void Motorcycle::operator()(){
     random_device rd;
     mt19937 gen{rd()};
@@ -21,15 +25,16 @@ void Motorcycle::operator()(){
 
     ostringstream buf;
     buf << setprecision(2) << fixed;
-    int cntr{};
-    while (true) {
+    for (int cntr{1}; cntr <= 10; cntr++) {
         double lap_time{dis(gen)};
         this_thread::sleep_for(chrono::milliseconds(int(lap_time * 1000)));
 
-        buf << this->brand_and_model << " raced " << ++cntr
+        buf << this->brand_and_model << " raced " << cntr
             << " Rounds, this Round took: " << lap_time << endl;
         string out{buf.str()};
         buf.str("");
         cout << out << flush;
+
+        this->totale_time += lap_time;
     }
 }
