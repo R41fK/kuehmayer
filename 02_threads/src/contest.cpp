@@ -15,7 +15,10 @@ void bimota_tesi_h2() {
     int cntr{};
     while (true) {
         this_thread::sleep_for(chrono::milliseconds(1000));
-        cout << "Bimota Tesi H2 raced " << ++cntr << " Rounds" << endl;
+        cntr++;
+        string out{"Bimota Tesi H2 raced "+ to_string(cntr) + " Rounds\n"};
+
+        cout << out << flush;
     }
 }
 

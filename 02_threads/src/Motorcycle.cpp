@@ -15,6 +15,8 @@ void Motorcycle::operator()(){
     int cntr{};
     while (true) {
         this_thread::sleep_for(chrono::milliseconds(1000));
-        cout << this->brand_and_model << " raced " << ++cntr << " Rounds" << endl;
+        cntr++;
+        string out{this->brand_and_model + " raced " + to_string(cntr) + " Rounds\n"};
+        cout << out << flush;
     }
 }
