@@ -45,7 +45,7 @@ int main() {
     double total_time_bimota_tesi{0};
 
     thread racer_1{bimota_tesi_h2, ref(total_time_bimota_tesi)};
-    thread racer_2{ninja_h2};
+    thread racer_2{ref(ninja_h2)};
 
     racer_1.join();
     racer_2.join();
