@@ -9,7 +9,7 @@ class Motorcycle{
 
     public:
         Motorcycle(std::string brand_and_model);
-        void operator()();
+        void operator()(int rounds);
         double get_total_time();
 
 };

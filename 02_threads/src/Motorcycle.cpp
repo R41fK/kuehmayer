@@ -18,14 +18,14 @@ double Motorcycle::get_total_time(){
     return this->totale_time;
 }
 
-void Motorcycle::operator()(){
+void Motorcycle::operator()(int rounds){
     random_device rd;
     mt19937 gen{rd()};
     uniform_real_distribution<> dis{1, 10};
 
     ostringstream buf;
     buf << setprecision(2) << fixed;
-    for (int cntr{1}; cntr <= 10; cntr++) {
+    for (int cntr{1}; cntr <= rounds; cntr++) {
         double lap_time{dis(gen)};
         this_thread::sleep_for(chrono::milliseconds(int(lap_time * 1000)));
 
