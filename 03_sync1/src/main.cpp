@@ -1,11 +1,12 @@
 #include "../include/Account.h"
+#include "../include/CLI11.hpp"
 
 #include <iostream>
 #include <thread>
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
     
     Account my_bank_account;
 
@@ -36,8 +37,21 @@ int main() {
 
     // cout << "new Account balance is: " << my_bank_account.get_balance() << endl;
 
-    Depositor depositor_1(ref(my_bank_account), 5);
-    Depositor depositor_2(ref(my_bank_account), 5);
+
+    CLI::App app("Account app");
+    
+    int balance{0};
+    app.add_option("balance", balance, "Initial balance")->required();
+    int deposits{5};
+    app.add_option("-d,--deposits", deposits, "Count of deposits", true);
+
+
+    CLI11_PARSE(app, argc, argv);
+
+    my_bank_account.deposit(balance);
+
+    Depositor depositor_1(ref(my_bank_account), deposits);
+    Depositor depositor_2(ref(my_bank_account), deposits);
 
     thread first{depositor_1};
     thread second{depositor_2};

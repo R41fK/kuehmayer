@@ -29,7 +29,7 @@ class Depositor{
         ;
 
         void operator()(){
-            for(int i=0; i < 5; i++) {
+            for(int i=0; i < this->deposites; i++) {
                 this->bank_account.deposit(1);
             }
         };
