@@ -42,8 +42,9 @@ int main(int argc, char* argv[]) {
     
     int balance{0};
     app.add_option("balance", balance, "Initial balance")->required();
+    
     int deposits{5};
-    app.add_option("-d,--deposits", deposits, "Count of deposits", true);
+    app.add_option("-d,--deposits", deposits, "Number of deposits", true);
 
 
     CLI11_PARSE(app, argc, argv);
