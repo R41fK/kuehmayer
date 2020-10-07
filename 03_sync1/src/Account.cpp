@@ -7,6 +7,7 @@ using namespace std;
 
 
 void Account::deposit(int amount) {
+    unique_lock u_lock{this->m};
     this->balance += amount;
 }
 
