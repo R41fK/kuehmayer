@@ -36,8 +36,8 @@ int main() {
 
     // cout << "new Account balance is: " << my_bank_account.get_balance() << endl;
 
-    Depositor depositor_1(ref(my_bank_account));
-    Depositor depositor_2(ref(my_bank_account));
+    Depositor depositor_1(ref(my_bank_account), 5);
+    Depositor depositor_2(ref(my_bank_account), 5);
 
     thread first{depositor_1};
     thread second{depositor_2};

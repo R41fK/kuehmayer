@@ -19,9 +19,14 @@ class Account{
 class Depositor{
 
     Account& bank_account;
+    int deposites{};
 
     public:
-        Depositor(Account& bank_account):bank_account(bank_account){};
+        Depositor(Account& bank_account, int deposites):
+            bank_account(bank_account), 
+            deposites(deposites)
+            {}
+        ;
 
         void operator()(){
             for(int i=0; i < 5; i++) {
