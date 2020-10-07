@@ -20,15 +20,27 @@ int main() {
     // cout << (my_bank_account.withdraw(10) ? "Money was withdrawn" : "Money was not withdrawn") 
     //     << " new Balance is: " << my_bank_account.get_balance() << endl;
 
-    my_bank_account.deposit(1);
+    // Punkt 5
+    // my_bank_account.deposit(1);
 
-    thread first{[&](){
-        my_bank_account.withdraw(1);
-    }};
+    // thread first{[&](){
+    //     my_bank_account.withdraw(1);
+    // }};
 
-    thread second{[&](){
-        my_bank_account.withdraw(1);
-    }};
+    // thread second{[&](){
+    //     my_bank_account.withdraw(1);
+    // }};
+
+    // first.join();
+    // second.join();
+
+    // cout << "new Account balance is: " << my_bank_account.get_balance() << endl;
+
+    Depositor depositor_1(ref(my_bank_account));
+    Depositor depositor_2(ref(my_bank_account));
+
+    thread first{depositor_1};
+    thread second{depositor_2};
 
     first.join();
     second.join();

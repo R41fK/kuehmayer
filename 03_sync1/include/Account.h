@@ -15,4 +15,19 @@ class Account{
 
 };
 
+
+class Depositor{
+
+    Account& bank_account;
+
+    public:
+        Depositor(Account& bank_account):bank_account(bank_account){};
+
+        void operator()(){
+            for(int i=0; i < 5; i++) {
+                this->bank_account.deposit(1);
+            }
+        };
+};
+
 #endif //ACCOUNT_H
