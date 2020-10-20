@@ -1,5 +1,6 @@
 #include "../include/WorkPacket.h"
 #include "../include/WorkQueue.h"
+#include "../include/CLI11.hpp"
 
 #include <iostream>
 #include <thread>
@@ -9,7 +10,7 @@
 
 using namespace std;
 
-void worker(int id, WorkQueue& queue){
+void worker(int id, WorkQueue& queue) {
     random_device rd;
     mt19937 gen{rd()};
     uniform_real_distribution<> dis{1, 10};
@@ -36,13 +37,12 @@ void worker(int id, WorkQueue& queue){
 }
 
 
-
-int main() {
+void consumer_producer(size_t size_of_queue) {
     random_device rd;
     mt19937 gen{rd()};
     uniform_real_distribution<> dis{0, 1};
     
-    WorkQueue queue{};
+    WorkQueue queue{size_of_queue};
 
     thread worker_1{worker, 1, ref(queue)};
     thread worker_2{worker, 2, ref(queue)};
@@ -69,4 +69,15 @@ int main() {
     worker_1.join();
     worker_2.join();
     worker_3.join();
+}
+
+
+int main(int argc, char** argv) {
+    CLI::App app("loadsim app");
+    
+    size_t size_of_queue{1};
+    app.add_option("size", size_of_queue, "Size")->required();
+
+    CLI11_PARSE(app, argc, argv);
+    consumer_producer(size_of_queue);
 }
