@@ -14,7 +14,7 @@ inc_dir = include_directories(['include',
 
 #subdir('XXX')
 
-src = ['src/loadsim.cpp']
+src = ['src/loadsim.cpp', 'src/WorkQueue.cpp']
 
 executable('loadsim',
             sources : src,

@@ -1,4 +1,5 @@
 #include "../include/WorkPacket.h"
+#include "../include/WorkQueue.h"
 
 #include <iostream>
 
