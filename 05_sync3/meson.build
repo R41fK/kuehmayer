@@ -19,6 +19,6 @@ src = ['src/main.cpp', 'src/philosopher.cpp']
 executable('dining',
             sources : src,
             include_directories : inc_dir,
-            #dependencies : XXX_dep,
+            dependencies : thread_dep,
             #link_with : XXX_lib
            )

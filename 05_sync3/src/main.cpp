@@ -2,7 +2,7 @@
 #include <iostream>
 #include <mutex>
 
-#include "../include/philospher.h"
+#include "../include/philosopher.h"
 
 using namespace std;
 
@@ -22,8 +22,8 @@ int main() {
 
     thread t1{p1};
     thread t2{p2};
-    thread t3{p2};
-    thread t4{p3};
+    thread t3{p3};
+    thread t4{p4};
     thread t5{p5};
 
     t1.join();
