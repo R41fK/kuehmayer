@@ -27,4 +27,7 @@ void philospher::operator()(){
 
     output = "Philosopher " + to_string(this->id) + " finished eating\n";
     cout << output << flush;
+
+    this->left_fork.unlock();
+    this->right_fork.unlock();
 }
