@@ -3,6 +3,7 @@
 #include <mutex>
 
 #include "../include/philosopher.h"
+#include "../include/semaphor.h"
 
 using namespace std;
 
@@ -14,11 +15,13 @@ int main() {
     mutex fork4{};
     mutex fork5{};
 
-    philospher p1{1, fork1, fork2};
-    philospher p2{2, fork2, fork3};
-    philospher p3{3, fork3, fork4};
-    philospher p4{4, fork4, fork5};
-    philospher p5{5, fork5, fork1};
+    semaphor s{4};
+
+    philospher p1{1, fork1, fork2, &s};
+    philospher p2{2, fork2, fork3, &s};
+    philospher p3{3, fork3, fork4, &s};
+    philospher p4{4, fork4, fork5, &s};
+    philospher p5{5, fork5, fork1, &s};
 
     thread t1{p1};
     thread t2{p2};

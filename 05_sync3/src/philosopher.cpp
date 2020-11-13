@@ -16,6 +16,9 @@ void philospher::operator()(){
 
     println("Philosopher", to_string(this->id), "attempts to get left fork");
 
+    if (this->s != nullptr) {
+        this->s->acquire();
+    }
     this->left_fork.lock();
 
     println("Philosopher", to_string(this->id), "got get left fork. Now he wants the right one ...");
@@ -30,4 +33,8 @@ void philospher::operator()(){
 
     this->left_fork.unlock();
     this->right_fork.unlock();
+
+    if (this->s != nullptr) {
+        this->s->release();
+    }
 }

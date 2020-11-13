@@ -13,10 +13,10 @@ void semaphor::acquire(){
 void semaphor::release(){
     lock_guard lg{this->mtx};
     this->cntr++;
+    can_lock.notify_one();
 }
 
 
 int semaphor::avaible_permits(){
-    lock_guard lg{this->mtx};
     return this->cntr;
 }
