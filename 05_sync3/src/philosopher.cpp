@@ -9,32 +9,64 @@
 using namespace std;
 
 void philospher::operator()(){
+    while (1){
+        println("Philosopher", to_string(this->id),  "is thinking ...");
 
-    println("Philosopher", to_string(this->id),  "is thinking ...");
+        this_thread::sleep_for(chrono::seconds(1));
 
-    this_thread::sleep_for(chrono::seconds(1));
+        bool got_right_fork{false};
 
-    println("Philosopher", to_string(this->id), "attempts to get left fork");
+        do {
+            println("Philosopher", to_string(this->id), "attempts to get left fork");
 
-    if (this->s != nullptr) {
-        this->s->acquire();
-    }
-    this->left_fork.lock();
+            if (this->s) {
+                this->s->acquire();
+            }
+            this->left_fork.lock();
 
-    println("Philosopher", to_string(this->id), "got get left fork. Now he wants the right one ...");
+            if (this->s) {
+                println("curently", to_string(this->s->avaible_permits()), "left forks available");
+            }
 
-    this_thread::sleep_for(chrono::seconds(5));
+            println("Philosopher", to_string(this->id), "got left fork. Now he wants the right one ...");
 
-    this->right_fork.lock();
+            this_thread::sleep_for(chrono::seconds(5));
 
-    this_thread::sleep_for(chrono::seconds(2));
+            if (livelock) {
+                got_right_fork = this->right_fork.try_lock_for(chrono::seconds(3));
 
-    println("Philosopher", to_string(this->id), "finished eating");
+                if (!got_right_fork) {
+                    this_thread::sleep_for(chrono::milliseconds(100));
 
-    this->left_fork.unlock();
-    this->right_fork.unlock();
+                    this->left_fork.unlock();
 
-    if (this->s != nullptr) {
-        this->s->release();
+                    println("Philosopher", to_string(this->id), "released left fork due to timeout getting the right one!");
+
+                    if (this->s) {
+                        this->s->release();
+                    }
+
+                    this_thread::sleep_for(chrono::seconds(3));
+                }
+            } else {
+                this->right_fork.lock();
+            }
+        } while (livelock && !got_right_fork);
+        
+        this_thread::sleep_for(chrono::seconds(2));
+
+        println("Philosopher", to_string(this->id), "finished eating");
+
+        this->left_fork.unlock();
+
+        println("Philosopher", to_string(this->id), "released left fork");
+
+        this->right_fork.unlock();
+
+        println("Philosopher", to_string(this->id), "released right fork");
+
+        if (this->s) {
+            this->s->release();
+        }
     }
 }
