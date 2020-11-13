@@ -3,8 +3,8 @@
 #include <chrono>
 #include <initializer_list>
 
-#include "../include/philosopher.h"
-#include "../include/utils.h"
+#include "philosopher.h"
+#include "utils.h"
 
 using namespace std;
 

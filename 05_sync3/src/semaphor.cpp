@@ -1,6 +1,6 @@
 #include <mutex>
 
-#include "../include/semaphor.h"
+#include "semaphor.h"
 
 using namespace std;
 
