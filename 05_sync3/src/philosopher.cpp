@@ -37,6 +37,8 @@ void philospher::operator()(){
 
     println("Philosopher", to_string(this->id), "got get left fork. Now he wants the right one ...");
 
+    this_thread::sleep_for(chrono::seconds(5));
+
     this->right_fork.lock();
 
     this_thread::sleep_for(chrono::seconds(2));
