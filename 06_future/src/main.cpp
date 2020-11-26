@@ -7,12 +7,10 @@ using namespace std;
 
 
 string validation(const string& str){
-    try{
-        stoi(str);
-    } catch (const invalid_argument & e) {
-        return str + " is not a Number";
-    } catch (const std::out_of_range & e) {
-        return str + " is to big for Int";
+    size_t found{str.find_first_not_of("0123456789")};
+    
+    if (found <= str.length()){
+        return str + " is not a Integer";
     }
     return "";
 }
