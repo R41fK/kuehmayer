@@ -1,4 +1,5 @@
 #include <iostream>
+#include <future>
 
 #include "CLI11.hpp"
 #include "calc_factors.h"
@@ -43,11 +44,13 @@ int main(int argc, char* argv[]) {
         numbers.push_back(str);
     }
     
-    
+    vector<future<vector<InfInt>>> factors{};
+
     for (InfInt number : numbers) {
-        cout << number << ": " << flush;
-        for (InfInt factor : get_factors(number)) {
-            cout << factor << " " << flush;
+        cout << number << ": ";
+        factors.push_back(async(get_factors, number));
+        for (InfInt factor : factors.back().get()) {
+            cout << factor << " ";
         }
         cout << endl;
     }
