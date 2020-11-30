@@ -23,6 +23,16 @@ string validation(const string& str){
     return "";
 }
 
+void output(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& factors){
+    for (unsigned int i=0; i < numbers.size(); i++) {
+        cout << numbers[i] << ": ";
+        for (InfInt factor : factors[i].get()) {
+            cout << factor << " ";
+        }
+        cout << endl;
+    }
+}
+
 
 int main(int argc, char* argv[]) {
     
@@ -47,11 +57,10 @@ int main(int argc, char* argv[]) {
     vector<future<vector<InfInt>>> factors{};
 
     for (InfInt number : numbers) {
-        cout << number << ": ";
         factors.push_back(async(get_factors, number));
-        for (InfInt factor : factors.back().get()) {
-            cout << factor << " ";
-        }
-        cout << endl;
     }
+
+    thread t{output, ref(numbers), ref(factors)};
+
+    t.join();
 }
