@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "CLI11.hpp"
+#include "calc_factors.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmisleading-indentation"
@@ -26,18 +27,28 @@ int main(int argc, char* argv[]) {
     
     CLI::App app("factoring");
 
-    vector<string> numbers{}; 
+    vector<string> strings_of_numbers{}; 
 
-    app.add_option("numbers", numbers, "Numbers that are factored")->required()->check(validation);
+    app.add_option("numbers", strings_of_numbers, "Numbers that are factored")->required()->check(validation);
+
+    bool is_async{false};
+
+    app.add_flag("-a, --async", is_async, "async");
 
     CLI11_PARSE(app, argc, argv);
 
-    vector<InfInt> factoring{};
+    vector<InfInt> numbers{};
 
-    for (string str : numbers) {
-        factoring.push_back(str);
-        cout << factoring.back() << endl;
+    for (string str : strings_of_numbers) {
+        numbers.push_back(str);
     }
     
     
+    for (InfInt number : numbers) {
+        cout << number << ": " << flush;
+        for (InfInt factor : get_factors(number)) {
+            cout << factor << " " << flush;
+        }
+        cout << endl;
+    }
 }
