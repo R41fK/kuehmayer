@@ -1,5 +1,6 @@
 #include <iostream>
 #include <future>
+#include <chrono>
 
 #include "CLI11.hpp"
 #include "calc_factors.h"
@@ -68,13 +69,26 @@ int main(int argc, char* argv[]) {
     
     vector<shared_future<vector<InfInt>>> factors{};
 
+    auto start{chrono::system_clock::now()};
+
+
     for (InfInt number : numbers) {
         factors.push_back(async(get_factors, number));
     }
 
+
     thread t1{check_factorisation, numbers, factors};
     thread t2{output, numbers, factors};
 
+
+    for (shared_future factor : factors) {
+        factor.wait();
+    }
+    auto duration{chrono::duration_cast<chrono::milliseconds>(std::chrono::system_clock::now() - start)};
+
+
     t1.join();
     t2.join();
+
+    cout << "Time elapsed used for factoring: " << duration.count() << "ms" << endl;
 }
