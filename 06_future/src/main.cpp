@@ -23,7 +23,7 @@ string validation(const string& str){
     return "";
 }
 
-void output(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& factors){
+void output(vector<InfInt> numbers, vector<shared_future<vector<InfInt>>> factors){
     for (unsigned int i=0; i < numbers.size(); i++) {
         cout << numbers[i] << ": ";
         for (InfInt factor : factors[i].get()) {
@@ -33,6 +33,18 @@ void output(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& factors){
     }
 }
 
+
+void check_factorisation(vector<InfInt> numbers, vector<shared_future<vector<InfInt>>> factors){
+    for (unsigned int i=0; i < numbers.size(); i++) {
+        InfInt number{1};
+        for (InfInt factor : factors[i].get()) {
+            number *= factor;
+        }
+        if (number != numbers[i]) {
+            cerr << "Factorisation failed for number: " << numbers[i] << "!!!" << endl;
+        }
+    }
+}
 
 int main(int argc, char* argv[]) {
     
@@ -54,13 +66,15 @@ int main(int argc, char* argv[]) {
         numbers.push_back(str);
     }
     
-    vector<future<vector<InfInt>>> factors{};
+    vector<shared_future<vector<InfInt>>> factors{};
 
     for (InfInt number : numbers) {
         factors.push_back(async(get_factors, number));
     }
 
-    thread t{output, ref(numbers), ref(factors)};
+    thread t1{check_factorisation, numbers, factors};
+    thread t2{output, numbers, factors};
 
-    t.join();
+    t1.join();
+    t2.join();
 }
