@@ -69,13 +69,18 @@ int main(int argc, char* argv[]) {
     
     vector<shared_future<vector<InfInt>>> factors{};
 
+    launch launch_type{launch::deferred};
+
+    if (is_async) {
+        launch_type = launch::async;
+    }
+   
     auto start{chrono::system_clock::now()};
 
-
     for (InfInt number : numbers) {
-        factors.push_back(async(get_factors, number));
+        factors.push_back(async(launch_type, get_factors, number));
     }
-
+    
 
     thread t1{check_factorisation, numbers, factors};
     thread t2{output, numbers, factors};
