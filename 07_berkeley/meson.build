@@ -14,7 +14,7 @@ inc_dir = include_directories(['include',
 
 #subdir('XXX')
 
-src = ['src/main.cpp', 'src/Clock.cpp']
+src = ['src/main.cpp', 'src/Clock.cpp', 'src/TimeSlave.cpp']
 
 executable('clock',
             sources : src,

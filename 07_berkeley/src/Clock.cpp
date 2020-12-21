@@ -10,11 +10,13 @@ using namespace std;
 
 
 void Clock::operator()(){
+    ostringstream buf{};
     while (1) {
-
-        cout << this->curr_time << endl;
+        buf << this->name + ": " << this->curr_time << endl;
+        cout << buf.str() << flush;
         this_thread::sleep_for(chrono::seconds(1));
         this->curr_time += 1s;
+        buf.str("");
     }
 }
 

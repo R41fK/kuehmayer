@@ -1,13 +1,17 @@
 #include <thread>
 
-#include "Clock.h"
+#include "TimeSlave.h"
 
 using namespace std;
 
 int main() {
     
-    Clock clock{"TestClock"};
-    thread t{clock};
+    TimeSlave s1{"slave1", 0, 0, 0};
+    TimeSlave s2{"slave2", 10, 0, 0};
 
-    t.join();
+    thread t1{ref(s1)};
+    thread t2{ref(s2)};
+
+    t1.join();
+    t2.join();
 }
