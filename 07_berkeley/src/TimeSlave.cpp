@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "TimeSlave.h"
-#include "Chanell.h"
+#include "Channel.h"
 
 using namespace std;
 
@@ -12,6 +12,6 @@ void TimeSlave::operator()(){
 }
 
 
-Chanell* TimeSlave::get_chanell(){
-    return &this->chanell;
+Channel* TimeSlave::get_channel(){
+    return &this->channel;
 }

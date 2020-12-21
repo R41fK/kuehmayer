@@ -2,7 +2,7 @@
 
 #include "pipe.h"
 
-class Chanell
+class Channel
 {
 private:
     Pipe<long> Pipe1{};

@@ -3,6 +3,7 @@
 #include <thread>
 
 #include "Clock.h"
+#include "Channel.h"
 
 class TimeMaster
 {
@@ -19,5 +20,7 @@ public:
         t_clock.join();
     };
 
+    void set_channel1(Channel* channel);
+    void set_channel2(Channel* channel);
     void operator()();
 };

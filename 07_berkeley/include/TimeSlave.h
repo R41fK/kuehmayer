@@ -3,14 +3,14 @@
 #include <thread>
 
 #include "Clock.h"
-#include "Chanell.h"
+#include "Channel.h"
 
 class TimeSlave
 {
 private:
     Clock clock;
     std::thread t_clock;
-    Chanell chanell;
+    Channel channel;
 public:
     TimeSlave(std::string name, int hours_, int minutes_, int seconds_):
     clock{Clock(name, hours_, minutes_, seconds_)},
@@ -22,5 +22,5 @@ public:
     };
 
     void operator()();
-    Chanell* get_chanell();
+    Channel* get_channel();
 };
