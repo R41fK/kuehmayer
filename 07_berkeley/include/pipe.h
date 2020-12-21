@@ -27,7 +27,7 @@ class Pipe {
         if (closed){
             return *this;
         }
-        not_empty.wait(ul, [this](){return this->backend.size});
+        not_empty.wait(ul, [this](){return this->backend.size;});
         value = backend.back();
         backend.pop(value);
         return *this;
