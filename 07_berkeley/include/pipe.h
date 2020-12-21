@@ -27,9 +27,9 @@ class Pipe {
         if (closed){
             return *this;
         }
-        not_empty.wait(ul, [this](){return this->backend.size;});
-        value = backend.back();
-        backend.pop(value);
+        not_empty.wait(ul, [this](){return this->backend.size() > 0;});
+        value = backend.front();
+        backend.pop();
         return *this;
     }
 
@@ -39,7 +39,7 @@ class Pipe {
     }
     
     explicit operator bool() {
-        return closed;
+        return !closed;
     }
 };
 #endif
