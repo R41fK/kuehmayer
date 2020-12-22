@@ -8,6 +8,10 @@
 using namespace std;
 
 void TimeMaster::operator()(){
+    long val1{0};
+    long val2{0};
+    long diff{0};
+
     while (this->channel1->get_pipe1() && this->channel1->get_pipe2() &&
            this->channel2->get_pipe1() && this->channel2->get_pipe2()) {
         
@@ -15,7 +19,15 @@ void TimeMaster::operator()(){
 
         this->channel1->get_pipe1() << 0;
         this->channel2->get_pipe1() << 0;
-        
+
+        this->channel1->get_pipe2() >> val1;
+        this->channel2->get_pipe2() >> val2;
+
+        diff = (val1 + val2 + this->clock.to_time()) / 3;
+
+        this->channel1->get_pipe1() << diff;
+        this->channel2->get_pipe1() << diff;
+        this->clock.from_time(diff);
     }
     this_thread::sleep_for(chrono::milliseconds(500));
 }

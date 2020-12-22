@@ -15,7 +15,7 @@ private:
 public:
     TimeMaster(std::string name, int hours_, int minutes_, int seconds_):
     clock{Clock(name, hours_, minutes_, seconds_)},
-    t_clock(this->clock)
+    t_clock(std::ref(this->clock))
     {};
 
     ~TimeMaster(){
