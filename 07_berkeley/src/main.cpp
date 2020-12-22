@@ -11,6 +11,9 @@ int main() {
     TimeSlave s2{"slave2", 30, 0, 0};
     TimeMaster m1{"master", 10, 0, 0};
 
+    s1.get_channel()->set_latency(1);
+    s2.get_channel()->set_latency(3);
+
     m1.set_channel1(s1.get_channel());
     m1.set_channel2(s2.get_channel());
 

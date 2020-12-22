@@ -25,9 +25,9 @@ void TimeMaster::operator()(){
 
         diff = (val1 + val2 + this->clock.to_time()) / 3;
 
+        this->clock.from_time(diff);
         this->channel1->get_pipe1() << diff;
         this->channel2->get_pipe1() << diff;
-        this->clock.from_time(diff);
     }
     this_thread::sleep_for(chrono::milliseconds(500));
 }
