@@ -8,11 +8,13 @@ using namespace std;
 int main() {
     
     TimeSlave s1{"slave1", 0, 0, 0, 0};
-    TimeSlave s2{"slave2", 30, 0, 0, 200};
-    TimeMaster m1{"master", 10, 0, 0, -100};
+    TimeSlave s2{"slave2", 0, 0, 0, 0};
+    TimeMaster m1{"master", 0, 0, 0, 0};
 
     s1.get_channel()->set_latency(1);
-    s2.get_channel()->set_latency(3);
+    s2.get_channel()->set_latency(0);
+
+    s2.set_time_monoton(true);
 
     m1.set_channel1(s1.get_channel());
     m1.set_channel2(s2.get_channel());

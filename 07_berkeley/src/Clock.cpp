@@ -14,9 +14,20 @@ void Clock::operator()(){
     while (1) {
         buf << this->name + ": " << this->curr_time << endl;
         cout << buf.str() << flush;
-        this_thread::sleep_for(chrono::milliseconds(1000 + this->deviation));
+        
+        if (this->is_right){
+            this_thread::sleep_for(chrono::milliseconds(this->sleep_time));
+        }
+        else {
+            this_thread::sleep_for(chrono::milliseconds(this->sleep_time*2));
+            this->right_time += 2;
+
+            if (this->right_time >= this->to_time()) {
+                this->is_right = true;
+            }
+        }
+        buf.str("");    
         this->curr_time += 1s;
-        buf.str("");
     }
 }
 
@@ -33,5 +44,14 @@ long Clock::to_time(){
 }
 
 void Clock::from_time(long time){
-    this->curr_time = chrono::system_clock::from_time_t(time);
+    if (this->is_monoton && time < this->to_time()) {
+        this->is_right = false;
+        this->right_time = time;  
+    } else {
+        this->curr_time = chrono::system_clock::from_time_t(time);  
+    } 
+}
+
+void Clock::set_time_monoton(bool set_monoton){
+    this->is_monoton = set_monoton;
 }
