@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     app.add_flag("--monotone", set_monoton, "set monotone mode");
 
     app.add_option("--latency1", latency1, "latency to channel 1 (both directions)");
-    app.add_option("--latency2", latency2, "latency to channel 1 (both directions)");
+    app.add_option("--latency2", latency2, "latency to channel 2 (both directions)");
 
     app.add_option("--deviation1", deviation1, "deviation of clock of slave 1");
     app.add_option("--deviation2", deviation2, "deviation of clock of slave 2");
