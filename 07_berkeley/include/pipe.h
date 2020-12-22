@@ -14,7 +14,7 @@ class Pipe {
   public:
     Pipe& operator<<(T value) {
         std::lock_guard lg{mtx};
-        if (closed){
+        if (closed) {
             return *this;
         }
         backend.push(value);
@@ -24,7 +24,7 @@ class Pipe {
     
     Pipe& operator>>(T& value) {
         std::unique_lock ul{mtx};
-        if (closed){
+        if (closed) {
             return *this;
         }
         not_empty.wait(ul, [this](){return this->backend.size() > 0;});
@@ -34,7 +34,6 @@ class Pipe {
     }
 
     void close() {
-        std::lock_guard lg{mtx};
         closed = true;
     }
     
