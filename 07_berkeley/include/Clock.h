@@ -19,8 +19,10 @@ public:
 
     Clock(std::string name, int hours_, int minutes_, int seconds_):
     name{name},
-    curr_time{::set_time(curr_time, hours_, minutes_, seconds_)}
-    {};
+    curr_time{std::chrono::system_clock::now()}
+    {
+        curr_time = ::set_time(curr_time, hours_, minutes_, seconds_);
+    };
 
     void set_time(int hours, int minutes, int seconds);
     std::tuple<int, int, int> get_time();

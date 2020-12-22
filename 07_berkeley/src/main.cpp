@@ -8,8 +8,8 @@ using namespace std;
 int main() {
     
     TimeSlave s1{"slave1", 0, 0, 0};
-    TimeSlave s2{"slave2", 10, 0, 0};
-    TimeMaster m1{"master", 30, 0, 0};
+    TimeSlave s2{"slave2", 30, 0, 0};
+    TimeMaster m1{"master", 10, 0, 0};
 
     m1.set_channel1(s1.get_channel());
     m1.set_channel2(s2.get_channel());
