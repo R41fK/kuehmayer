@@ -10,16 +10,17 @@ class Clock
 private:
     std::string name{};
     std::chrono::time_point<std::chrono::system_clock> curr_time{};
-
+    int deviation{0};
 public:
     Clock(std::string name): 
     name{name},
     curr_time{std::chrono::system_clock::now()}
     {};
 
-    Clock(std::string name, int hours_, int minutes_, int seconds_):
+    Clock(std::string name, int hours_, int minutes_, int seconds_, int deviation):
     name{name},
-    curr_time{std::chrono::system_clock::now()}
+    curr_time{std::chrono::system_clock::now()},
+    deviation{deviation}
     {
         curr_time = ::set_time(curr_time, hours_, minutes_, seconds_);
     };

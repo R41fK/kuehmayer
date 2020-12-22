@@ -13,8 +13,8 @@ private:
     Channel* channel1;
     Channel* channel2;
 public:
-    TimeMaster(std::string name, int hours_, int minutes_, int seconds_):
-    clock{Clock(name, hours_, minutes_, seconds_)},
+    TimeMaster(std::string name, int hours_, int minutes_, int seconds_, int deviation):
+    clock{Clock(name, hours_, minutes_, seconds_, deviation)},
     t_clock(std::ref(this->clock))
     {};
 

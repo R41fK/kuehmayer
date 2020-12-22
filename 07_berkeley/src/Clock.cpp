@@ -14,7 +14,7 @@ void Clock::operator()(){
     while (1) {
         buf << this->name + ": " << this->curr_time << endl;
         cout << buf.str() << flush;
-        this_thread::sleep_for(chrono::seconds(1));
+        this_thread::sleep_for(chrono::milliseconds(1000 + this->deviation));
         this->curr_time += 1s;
         buf.str("");
     }

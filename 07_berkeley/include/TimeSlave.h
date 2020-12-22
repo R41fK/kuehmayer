@@ -12,8 +12,8 @@ private:
     std::thread t_clock;
     Channel channel;
 public:
-    TimeSlave(std::string name, int hours_, int minutes_, int seconds_):
-    clock{Clock(name, hours_, minutes_, seconds_)},
+    TimeSlave(std::string name, int hours_, int minutes_, int seconds_, int deviation):
+    clock{Clock(name, hours_, minutes_, seconds_, deviation)},
     t_clock(std::ref(this->clock))
     {};
 
