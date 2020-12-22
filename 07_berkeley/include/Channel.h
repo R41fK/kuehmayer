@@ -10,4 +10,5 @@ private:
 public:
     Pipe<long>& get_pipe1();
     Pipe<long>& get_pipe2();
+    void set_latency(long latency);
 };

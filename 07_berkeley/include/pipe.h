@@ -4,6 +4,9 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
+#include <future>
+#include <thread>
+#include <chrono>
 
 template <typename T>
 class Pipe {
@@ -11,14 +14,20 @@ class Pipe {
     std::mutex mtx;
     std::condition_variable not_empty;
     bool closed{false};
+    long latency{0};
   public:
     Pipe& operator<<(T value) {
         std::lock_guard lg{mtx};
         if (closed) {
             return *this;
         }
-        backend.push(value);
-        not_empty.notify_one();
+        std::future<void> ret = async(std::launch::async, [&](){
+            std::this_thread::sleep_for(std::chrono::seconds(this->latency));
+            backend.push(value);
+            not_empty.notify_one();
+        });
+        
+
         return *this;
     }
     
@@ -35,6 +44,10 @@ class Pipe {
 
     void close() {
         closed = true;
+    }
+
+    void set_latency(long latency){
+        this->latency = latency;
     }
     
     explicit operator bool() {
