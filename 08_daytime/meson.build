@@ -7,8 +7,8 @@ project('daytime', 'cpp',
 
 inc_dir = include_directories(['include',
 #                               get_option('cli11_include_dir'),
-#                               get_option('spdlog_include_dir'),
-                               get_option('json_include_dir'),
+                               get_option('spdlog_include_dir'),
+#                               get_option('json_include_dir'),
 #                               get_option('asio_include_dir')                               
                               ])
 
@@ -16,7 +16,7 @@ inc_dir = include_directories(['include',
 
 src_server =  ['src/daytime_server/server.cpp']
 
-executable('XXX',
+executable('server',
             sources : src_server,
             include_directories : inc_dir,
             #dependencies : XXX_dep,
@@ -27,7 +27,7 @@ executable('XXX',
 
 src_client = ['src/daytime_client/client.cpp']
 
-executable('XXX',
+executable('client',
             sources : src_client,
             include_directories : inc_dir,
             #dependencies : XXX_dep,

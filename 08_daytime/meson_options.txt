@@ -3,7 +3,7 @@ option('asio_include_dir', type : 'string', value : '', description : 'the inclu
 option('cli11_include_dir', type : 'string', value : '', description : 'the dir containing CLI11.hpp')
 option('doctest_include_dir', type : 'string', value : '', description : 'the dir containing doctest.h')
 option('json_include_dir', type : 'string', value : '', description : 'the dir containing json.hpp')
-option('spdlog_include_dir', type : 'string', value : '/mnt/Storage/NVSprojekt/spdlog', description : 'the include dir of spdlog')
+option('spdlog_include_dir', type : 'string', value : '/mnt/Storage/NVSprojekt/', description : 'the include dir of spdlog')
 option('fmt_include_dir', type : 'string', value : '', description : 'the include dir of fmt')
 option('toml_include_dir', type : 'string', value : '', description : 'the include dir of toml++')
 
