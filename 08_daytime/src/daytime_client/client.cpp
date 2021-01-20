@@ -17,6 +17,8 @@ int main(int argc, char** argv) {
     CLI::App app("client");
 
     CLI11_PARSE(app, argc, argv);
+    
+    spdlog::set_pattern("[%^%l%$] %v");
 
     ip::tcp::iostream strm{"localhost", "1113"};
 
@@ -26,7 +28,8 @@ int main(int argc, char** argv) {
         cout << data << endl;
         strm.close();
     } else { 
-        cerr << "Could not connect to server!" << endl; 
+        cerr << "Could not connect to server!" << endl;
+        spdlog::warn(fmt::format(fg(fmt::color::orange), "Could not connect to server!"));
     } 
 
 
