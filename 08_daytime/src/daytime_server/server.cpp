@@ -18,14 +18,14 @@ int main() {
     asio::io_context ctx;
     ip::tcp::endpoint ep{ip::tcp::v4(), 1113};
     ip::tcp::acceptor acceptor{ctx, ep}; 
-    acceptor.listen();
-    
-    ip::tcp::iostream strm{acceptor.accept()};
+    while (1) {
+        acceptor.listen();
+        
+        ip::tcp::iostream strm{acceptor.accept()};
 
-    string data;
+        string data;
 
-    strm << asio::chrono::system_clock::now();    
-    strm.close();
-    
-
+        strm << asio::chrono::system_clock::now();    
+        strm.close();
+    }
 }
