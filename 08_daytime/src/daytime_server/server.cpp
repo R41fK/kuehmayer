@@ -9,14 +9,22 @@
 using namespace asio;
 using namespace std;
 
-int main() {
+int main(int argc, char** argv) {
     
     // spdlog::info(fmt::format(
     //             fg(fmt::color::magenta), 
     //             "Hello world in magenta."));
 
+    short unsigned int port{1113};
+
+    CLI::App app("client");
+
+    app.add_option("-p", port, "server port", true);
+
+    CLI11_PARSE(app, argc, argv);
+
     asio::io_context ctx;
-    ip::tcp::endpoint ep{ip::tcp::v4(), 1113};
+    ip::tcp::endpoint ep{ip::tcp::v4(), port};
     ip::tcp::acceptor acceptor{ctx, ep}; 
     while (1) {
         acceptor.listen();

@@ -14,22 +14,34 @@ int main(int argc, char** argv) {
     //             fg(fmt::color::linen), 
     //             "Hello world in linen."));
 
+    unsigned int port{1113};
+
     CLI::App app("client");
+
+    app.add_option("-p", port, "port to connect to", true);
 
     CLI11_PARSE(app, argc, argv);
 
     spdlog::set_pattern("[%^%l%$] %v");
 
-    ip::tcp::iostream strm{"localhost", "1113"};
+    ip::tcp::iostream strm{"localhost", to_string(port)};
+
+    strm.expires_after(10s);
 
     if (strm) { 
         string data;
         getline(strm, data);
-        cout << data << endl;
+        
+        if (strm.error()) {
+            cout << data << endl;
+        } else {
+           spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
+        }
+
         strm.close();
     } else { 
         cerr << "Could not connect to server!" << endl;
-        spdlog::warn(fmt::format(fg(fmt::color::orange), "Could not connect to server!"));
+        spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
     } 
 
 
