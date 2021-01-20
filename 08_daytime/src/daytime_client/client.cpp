@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     CLI::App app("client");
 
     CLI11_PARSE(app, argc, argv);
-    
+
     spdlog::set_pattern("[%^%l%$] %v");
 
     ip::tcp::iostream strm{"localhost", "1113"};
