@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         cout << data << endl;
         strm.close();
     } else { 
-        cout << "no connection" << endl; 
+        cerr << "Could not connect to server!" << endl; 
     } 
 
 
