@@ -25,15 +25,19 @@ int main(int argc, char** argv) {
 
     asio::io_context ctx;
     ip::tcp::endpoint ep{ip::tcp::v4(), port};
-    ip::tcp::acceptor acceptor{ctx, ep}; 
-    while (1) {
-        acceptor.listen();
-        
-        ip::tcp::iostream strm{acceptor.accept()};
+    ip::tcp::acceptor acceptor{ctx, ep};
 
-        string data;
+    try {
+        while (1) {
+            acceptor.listen();
+            
+            ip::tcp::iostream strm{acceptor.accept()};
 
-        strm << asio::chrono::system_clock::now();    
-        strm.close();
+            strm << asio::chrono::system_clock::now();
+            
+            strm.close();
+        }
+    } catch (asio::system_error& e) {
+        spdlog::error(fmt::format(fg(fmt::color::red), e.what())); 
     }
 }

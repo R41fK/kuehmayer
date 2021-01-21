@@ -28,21 +28,23 @@ int main(int argc, char** argv) {
 
     strm.expires_after(10s);
 
-    if (strm) { 
-        string data;
-        getline(strm, data);
-        
-        if (strm.error()) {
-            cout << data << endl;
-        } else {
-           spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
-        }
+    try {
+        if (strm) { 
+            string data;
+            getline(strm, data);
+            
+            if (strm) {
+                cout << data << endl;
+            } else {
+            spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
+            }
 
-        strm.close();
-    } else { 
-        cerr << "Could not connect to server!" << endl;
-        spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
-    } 
-
-
+            strm.close();
+        } else { 
+            cerr << "Could not connect to server!" << endl;
+            spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
+        } 
+    } catch (asio::system_error& e) {
+        spdlog::error(fmt::format(fg(fmt::color::red), e.what())); 
+    }
 }
