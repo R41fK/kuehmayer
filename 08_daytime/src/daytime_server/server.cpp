@@ -23,15 +23,21 @@ int main(int argc, char** argv) {
 
     CLI11_PARSE(app, argc, argv);
 
+    spdlog::set_pattern("[%^%l%$] %v");
+
     asio::io_context ctx;
     ip::tcp::endpoint ep{ip::tcp::v4(), port};
     ip::tcp::acceptor acceptor{ctx, ep};
 
     try {
         while (1) {
+            spdlog::info(fmt::format(fg(fmt::color::green), "Server waiting for request")); 
+
             acceptor.listen();
             
             ip::tcp::iostream strm{acceptor.accept()};
+
+            spdlog::info(fmt::format(fg(fmt::color::green), "Server sending Date")); 
 
             strm << asio::chrono::system_clock::now();
             

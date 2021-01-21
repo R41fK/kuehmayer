@@ -41,7 +41,6 @@ int main(int argc, char** argv) {
 
             strm.close();
         } else { 
-            cerr << "Could not connect to server!" << endl;
             spdlog::error(fmt::format(fg(fmt::color::red), strm.error().message()));
         } 
     } catch (asio::system_error& e) {
